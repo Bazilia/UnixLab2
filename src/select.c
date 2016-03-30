@@ -48,7 +48,7 @@ void doSelect(char* logFileName,char* command,char* arguments){
       if (dup2(fd0[0],0) == -1){
         perror("Не могу заменить дескриптор stdin: ");
         return;
-      }    
+      }
       if (dup2(fd1[1],1) == -1){
         perror("Не могу заменить дескриптор stdout: ");
         return;
@@ -58,7 +58,7 @@ void doSelect(char* logFileName,char* command,char* arguments){
         return;
       }
       char* args[] = {command, arguments, NULL};
-      if (execv(command,args) == -1){
+      if (execvp(command,args) == -1){
         perror("Не могу выполнить команду: ");
         return;
       }
