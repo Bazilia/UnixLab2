@@ -41,14 +41,16 @@ int main(int argc, char *argv[]){
  char* currentArgument = strtok(NULL," ");
  arguments[0] = command;
  arguments[1] = currentArgument;
+ printf("С аргументом: %s\n",arguments[1]);
  int i=2;
  while (currentArgument!= NULL) {
    currentArgument = strtok(NULL," ");
    arguments[i] = currentArgument;
+   printf("С аргументом: %s\n",arguments[i]);
    i++;
  }
  arguments[i]=NULL;
- printf("С аргументами: %s\n",arguments);
+
 
  if(multiplexVal == 1){
    doSelect(logFileName, command, arguments);
