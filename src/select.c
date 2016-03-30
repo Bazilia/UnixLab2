@@ -15,7 +15,7 @@ void childHandler(int sigNumber, siginfo_t *siginfo, void *context){
 void doSelect(char* logFileName,char* command,char* arguments){
   int fd0[2], fd1[2], fd2[2];
   fd_set fds;
-
+  printf("start select\n" );
   if(pipe(fd0) != 0){
     perror("Не могу открыть первую пайпу");
     return;
