@@ -18,7 +18,7 @@ void doSelect(char* logFileName,char* command,char* arguments){
     perror("Не могу открыть третью пайпу");
     return;
   }
-  printf("Пайпы создались %s\n");
+  printf("Пайпы создались \n");
   pid_t child = fork();
     if(child == -1){
       perror("Не могу форкнуться: ");
