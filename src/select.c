@@ -18,7 +18,7 @@ void doSelect(char* logFileName,char* command,char* arguments){
     perror("Не могу открыть третью пайпу");
     return;
   }
-  printf("Пайпы создались \n");
+  printf("Пайпы создались %s\n");
   pid_t child = fork();
     if(child == -1){
       perror("Не могу форкнуться: ");
@@ -52,10 +52,10 @@ void doSelect(char* logFileName,char* command,char* arguments){
         return;
       }
       while(1){
-        struct timeval waitTime = {
-          .tv_sec = 1;
-          .tv_usec = 0;
-        };
+        struct timeval waitTime;
+        waitTime.tv_sec = 1;
+        waitTime.tv_usec = 0;
+
         FD_ZERO(&fds);
         FD_SET(0,&fds);
         FD_SET(fd1[0],&fds);
