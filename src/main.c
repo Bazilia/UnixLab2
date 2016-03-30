@@ -5,6 +5,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 static const struct option opts[] = {
   {"logfile", required_argument, NULL, 0},
