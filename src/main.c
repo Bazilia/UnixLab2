@@ -37,7 +37,7 @@ int main(int argc, char *argv[]){
  char* command = strtok(commandsAndArgs," ");
  printf("Выполняем её: %s\n",command);
 
- char* arguments[] = malloc(strlen(commandsAndArgs)*sizeof(char*));
+ char** arguments = malloc(strlen(commandsAndArgs)*sizeof(char*));
  char* currentArgument = strtok(NULL," ");
  arguments[0] = command;
  arguments[1] = currentArgument;
