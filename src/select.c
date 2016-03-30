@@ -12,7 +12,7 @@ void childHandler(int sigNumber, siginfo_t *siginfo, void *context){
   info = *siginfo;
 }
 
-void doSelect(char* logFileName,char* command,char* arguments){
+void doSelect(char* logFileName,char* command,char* arguments[]){
   int fd0[2], fd1[2], fd2[2];
   fd_set fds;
   printf("start select\n" );
@@ -57,8 +57,7 @@ void doSelect(char* logFileName,char* command,char* arguments){
         perror("Не могу заменить дескриптор stderr: ");
         return;
       }
-      char* args[] = {command, arguments, NULL};
-      if (execvp(command,args) == -1){
+      if (execvp  (command,arguments) == -1){
         perror("Не могу выполнить команду: ");
         return;
       }

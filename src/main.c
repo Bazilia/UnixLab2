@@ -36,7 +36,18 @@ int main(int argc, char *argv[]){
 
  char* command = strtok(commandsAndArgs," ");
  printf("Выполняем её: %s\n",command);
- char* arguments = strtok(NULL,"");
+
+ char* arguments[] = malloc(strlen(commandsAndArgs)*sizeof(char*));
+ char* currentArgument = strtok(NULL," ");
+ arguments[0] = command;
+ arguments[1] = currentArgument;
+ int i=2;
+ while (currentArgument!= NULL) {
+   currentArgument = strtok(NULL," ");
+   arguments[i] = currentArgument;
+   i++;
+ }
+ arguments[i]=NULL;
  printf("С аргументами: %s\n",arguments);
 
  if(multiplexVal == 1){
