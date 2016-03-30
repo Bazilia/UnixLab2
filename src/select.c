@@ -35,7 +35,7 @@ void doSelect(char* logFileName,char* command,char* arguments){
         perror("Не могу закрыть читателя в потомке на stderr: ");
         return;
       }
-      if (execlp(command,arguments) == -1){
+      if (execlp(command,arguments,NULL) == -1){
         perror("Не могу выполнить команду: ");
       }
     }else{
