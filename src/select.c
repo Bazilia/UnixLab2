@@ -57,7 +57,8 @@ void doSelect(char* logFileName,char* command,char* arguments){
         perror("Не могу заменить дескриптор stderr: ");
         return;
       }
-      if (execlp(command,arguments,NULL) == -1){
+      char* args[1] = {arguments};
+      if (execv(command,args) == -1){
         perror("Не могу выполнить команду: ");
         return;
       }
