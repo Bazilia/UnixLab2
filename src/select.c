@@ -6,6 +6,7 @@
 #include <signal.h>
 #include <string.h>
 #include <time.h>
+#include <fcntl.h>
 
 int gotSignal = 0;
 siginfo_t childInfo;
