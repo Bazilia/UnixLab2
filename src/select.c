@@ -112,14 +112,18 @@ void doSelect(char* logFileName, char* command, char** arguments){
 			FD_SET(fd1[0], &fds);
 			FD_SET(fd2[0], &fds);
 
-
-
-			int res = select(FD_SETSIZE, &fds, NULL, NULL, &waitTime);
+				if(fd1[0]>fd2[0]){
+					int maxFd = fd1[0];
+				}
+				else{
+					int maxFd = fd2[0];
+				}
+			int res = select(maxFd, &fds, NULL, NULL, &waitTime);
 			if (res == -1){
 				perror("Ошибка в селекте: ");
 				return;
 			}
-			//Получаем текущее время
+
 			char timeStr[18];
 			time_t t = time(NULL);
 			struct tm tm = *localtime(&t);
