@@ -6,16 +6,14 @@
 #include <signal.h>
 
 int gotSignal = 0;
-siginfo_t info;
 void childHandler(int sigNumber, siginfo_t *siginfo, void *context){
   gotSignal = 1;
-  info = *siginfo;
 }
 
 void doSelect(char* logFileName,char* command,char** arguments){
   int fd0[2], fd1[2], fd2[2];
   fd_set fds;
-  printf("start select\n" );
+  printf("Select пошёл\n" );
   if(pipe(fd0) != 0){
     perror("Не могу открыть первую пайпу");
     return;
@@ -71,9 +69,9 @@ void doSelect(char* logFileName,char* command,char** arguments){
       sigaddset(&mask, SIGCHLD);
       act.sa_mask = mask;
       if (sigaction(SIGCHLD, &act, NULL) == -1) {
-        fprintf(stderr, "Не могу поменять обработчик SIGCHILD");
+        perror("Не могу поменять обработчик SIGCHILD: ");
+        return;
       }
-
       if(close(fd0[0])){
         perror("Не могу закрыть читателя в предке на stdin: ");
         return;
