@@ -111,12 +111,12 @@ void doSelect(char* logFileName, char* command, char** arguments){
 			FD_SET(0, &fds);
 			FD_SET(fd1[0], &fds);
 			FD_SET(fd2[0], &fds);
-			int maxFd = 0;
+			int maxFd = 1;
 				if(fd1[0]>fd2[0]){
-					maxFd = fd1[0];
+					maxFd = fd1[0]+1;
 				}
 				else{
-					maxFd = fd2[0];
+					maxFd = fd2[0]+1;
 				}
 			int res = select(maxFd, &fds, NULL, NULL, &waitTime);
 			if (res == -1){
