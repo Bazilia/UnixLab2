@@ -133,7 +133,7 @@ void doSelect(char* logFileName, char* command, char** arguments){
 			}
 			if (FD_ISSET(0, &fds)){
 				int readSize = read(0, currentRead, sizeof(currentRead)-1);
-				//currentRead[readSize++]='\0';
+				currentRead[readSize]='\0';
 				if (readSize == -1){
 					perror("Не могу считать из stdin: ");
 					return;
@@ -183,6 +183,6 @@ void doSelect(char* logFileName, char* command, char** arguments){
 				//------
 			}
 		}
-		printf("%d TERMINATED WITH CODE %d", child, childInfo.si_code);
+		printf("%d TERMINATED WITH CODE %d\n", child, childInfo.si_code);
 	}
 }

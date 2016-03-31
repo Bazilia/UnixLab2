@@ -151,7 +151,7 @@ void doSignals(char* logFileName, char* command, char** arguments){
 			if (gotInSignal == 1){
 				gotInSignal = 0;
 				int readSize = read(0, currentRead, sizeof(currentRead)-1);
-				//currentRead[readSize++]='\0';
+				currentRead[readSize]='\0';
 				if (readSize == -1){
 					perror("Не могу считать из stdin: ");
 					return;
@@ -202,7 +202,7 @@ void doSignals(char* logFileName, char* command, char** arguments){
 				write(logFD, " / NO IO\n", 9);
 			}
 		}
-		printf("%d TERMINATED WITH CODE %d", child, childInfo.si_code);
+		printf("%d TERMINATED WITH CODE %d\n", child, childInfo.si_code);
 	}
 
 }
