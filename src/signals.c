@@ -151,7 +151,7 @@ void doSignals(char* logFileName, char* command, char** arguments){
 			if (gotInSignal == 1){
 				gotInSignal = 0;
 				int readSize = read(0, currentRead, sizeof(currentRead)-1);
-				currentRead[readSize++]='\0';
+				//currentRead[readSize++]='\0';
 				if (readSize == -1){
 					perror("Не могу считать из stdin: ");
 					return;
@@ -176,7 +176,7 @@ void doSignals(char* logFileName, char* command, char** arguments){
 					perror("Не могу считать из пайпы для stdout: ");
 					return;
 				}
-				printf("%d / <1 / %s\n", child, currentRead);
+				printf("%d / <1 / %s", child, currentRead);
 
 				write(logFD, timeStr, strlen(timeStr));
 				write(logFD, " / <1 / ", 8);
@@ -191,7 +191,7 @@ void doSignals(char* logFileName, char* command, char** arguments){
 					perror("Не могу считать из пайпы для stderr: ");
 					return;
 				}
-				printf("%d / <2 / %s\n", child, currentRead);
+				printf("%d / <2 / %s", child, currentRead);
 
 				write(logFD, timeStr, strlen(timeStr));
 				write(logFD, " / <2 / ", 8);

@@ -128,12 +128,12 @@ void doSelect(char* logFileName, char* command, char** arguments){
 			if (res == 0) {
 				//--Выводим лог в файл или stderr--
 				write(logFD, timeStr, strlen(timeStr));
-				write(logFD, " / NO IO", 8);
+				write(logFD, " / NO IO\n", 9);
 				//------
 			}
 			if (FD_ISSET(0, &fds)){
 				int readSize = read(0, currentRead, sizeof(currentRead)-1);
-				currentRead[readSize++]='\0';
+				//currentRead[readSize++]='\0';
 				if (readSize == -1){
 					perror("Не могу считать из stdin: ");
 					return;
@@ -159,7 +159,7 @@ void doSelect(char* logFileName, char* command, char** arguments){
 				}
 				//write(fd0[1],currentRead,readSize);
 				//--Выводим инфу на экран--
-				printf("%d / <1 / %s\n", child, currentRead);
+				printf("%d / <1 / %s", child, currentRead);
 				//--Выводим лог в файл или stderr--
 				write(logFD, timeStr, strlen(timeStr));
 				write(logFD, " / <1 / ", 8);
@@ -175,7 +175,7 @@ void doSelect(char* logFileName, char* command, char** arguments){
 				}
 				//write(fd0[1],currentRead,readSize);
 				//--Выводим инфу на экран--
-				printf("%d / <2 / %s\n", child, currentRead);
+				printf("%d / <2 / %s", child, currentRead);
 				//--Выводим лог в файл или stderr--
 				write(logFD, timeStr, strlen(timeStr));
 				write(logFD, " / <2 / ", 8);
