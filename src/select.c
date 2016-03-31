@@ -137,6 +137,7 @@ void doSelect(char* logFileName, char* command, char** arguments){
 				}
 				if (strncmp(currentRead, "exit", 4) == 0){
 					kill(SIGKILL, child);
+					break;
 				}
 				write(fd0[1], currentRead, readSize);
 
