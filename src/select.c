@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <signal.h>
+#include <string.h>
 
 int gotSignal = 0;
 void childHandler(int sigNumber, siginfo_t *siginfo, void *context){
