@@ -137,16 +137,16 @@ void doSelect(char* logFileName, char* command, char** arguments){
 					perror("Не могу считать из stdin: ");
 					return;
 				}
-				if (strcmp(currentRead, "exit", 4) == 0){
+				if (strncmp(currentRead, "exit", 4) == 0){
 					kill(SIGKILL, child);
 				}
 				write(fd0[1], currentRead, readSize);
 				//--Выводим инфу на экран--
-				printf("%d / >0 / %s\n", child, str);
+				printf("%d / >0 / %s\n", child, currentRead);
 				//--Выводим лог в файл или stderr--
 				write(logFD, timeStr, strlen(timeStr));
 				write(logFD, " / >0 / ", 8);
-				write(logFD, str, strlen(str));
+				write(logFD, currentRead, readSize);
 				//------
 			}
 			if (FD_ISSET(fd1[0], &fds)){
@@ -157,11 +157,11 @@ void doSelect(char* logFileName, char* command, char** arguments){
 				}
 				//write(fd0[1],currentRead,readSize);
 				//--Выводим инфу на экран--
-				printf("%d / <1 / %s\n", child, str);
+				printf("%d / <1 / %s\n", child, currentRead);
 				//--Выводим лог в файл или stderr--
 				write(logFD, timeStr, strlen(timeStr));
 				write(logFD, " / <1 / ", 8);
-				write(logFD, str, strlen(str));
+				write(logFD, currentRead, readSize);
 				//------
 			}
 			if (FD_ISSET(fd2[0], &fds)){
@@ -172,11 +172,11 @@ void doSelect(char* logFileName, char* command, char** arguments){
 				}
 				//write(fd0[1],currentRead,readSize);
 				//--Выводим инфу на экран--
-				printf("%d / <2 / %s\n", child, str);
+				printf("%d / <2 / %s\n", child, currentRead);
 				//--Выводим лог в файл или stderr--
 				write(logFD, timeStr, strlen(timeStr));
 				write(logFD, " / <2 / ", 8);
-				write(logFD, str, strlen(str));
+				write(logFD, currentRead, readSize);
 				//------
 			}
 		}

@@ -155,16 +155,16 @@ void doSignals(char* logFileName, char* command, char** arguments){
 					perror("Не могу считать из stdin: ");
 					return;
 				}
-				if (strcmp(currentRead, "exit\n")){
+				if (strncmp(currentRead, "exit", 4)){
 					kill(SIGKILL, child);
 				}
 				write(fd0[1], currentRead, readSize);
 
-				printf("%d / >0 / %s\n", child, str);
+				printf("%d / >0 / %s\n", child, currentRead);
 
 				write(logFD, timeStr, strlen(timeStr));
 				write(logFD, " / >0 / ", 8);
-				write(logFD, str, strlen(str));
+				write(logFD, currentRead, readSize;
 			}
 			else if (gotOutSignal == 1){
 				gotOutSignal = 0;
@@ -174,11 +174,11 @@ void doSignals(char* logFileName, char* command, char** arguments){
 					perror("Не могу считать из пайпы для stdout: ");
 					return;
 				}
-				printf("%d / <1 / %s\n", child, str);
+				printf("%d / <1 / %s\n", child, currentRead);
 
 				write(logFD, timeStr, strlen(timeStr));
 				write(logFD, " / <1 / ", 8);
-				write(logFD, str, strlen(str));
+				write(logFD, currentRead, readSize;
 			}
 			else if (gotErrorSignal == 1){
 				gotErrorSignal = 0;
@@ -188,11 +188,11 @@ void doSignals(char* logFileName, char* command, char** arguments){
 					perror("Не могу считать из пайпы для stderr: ");
 					return;
 				}
-				printf("%d / <2 / %s\n", child, str);
+				printf("%d / <2 / %s\n", child, currentRead);
 
 				write(logFD, timeStr, strlen(timeStr));
 				write(logFD, " / <2 / ", 8);
-				write(logFD, str, strlen(str));
+				write(logFD, currentRead, readSize;
 			}
 			else{
 				write(logFD, timeStr, strlen(timeStr));
