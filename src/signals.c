@@ -157,6 +157,8 @@ void doSignals(char* logFileName, char* command, char** arguments){
 					return;
 				}
 				if (strncmp(currentRead, "exit", 4) == 0){
+					printf("%s\n",currentRead);
+					
 					kill(SIGKILL, child);
 				}
 				write(fd0[1], currentRead, readSize);
