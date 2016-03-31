@@ -150,7 +150,8 @@ void doSignals(char* logFileName, char* command, char** arguments){
 			strftime(timeStr, 18, "%D %H:%M:%S", &tm);
 			if (gotInSignal == 1){
 				gotInSignal = 0;
-				int readSize = read(0, currentRead, sizeof(currentRead));
+				int readSize = read(0, currentRead, sizeof(currentRead)-1);
+				currentRead[readSize++]='\0';
 				if (readSize == -1){
 					perror("Не могу считать из stdin: ");
 					return;
@@ -160,7 +161,7 @@ void doSignals(char* logFileName, char* command, char** arguments){
 				}
 				write(fd0[1], currentRead, readSize);
 
-				printf("%d / >0 / %s\n", child, currentRead);
+				printf("%d / >0 / %s", child, currentRead);
 
 				write(logFD, timeStr, strlen(timeStr));
 				write(logFD, " / >0 / ", 8);
@@ -169,7 +170,8 @@ void doSignals(char* logFileName, char* command, char** arguments){
 			else if (gotOutSignal == 1){
 				gotOutSignal = 0;
 
-				int readSize = read(fd1[0], currentRead, sizeof(currentRead));
+				int readSize = read(fd1[0], currentRead, sizeof(currentRead)-1);
+				currentRead[readSize++]='\0';
 				if (readSize == -1){
 					perror("Не могу считать из пайпы для stdout: ");
 					return;
@@ -183,7 +185,8 @@ void doSignals(char* logFileName, char* command, char** arguments){
 			else if (gotErrorSignal == 1){
 				gotErrorSignal = 0;
 
-				int readSize = read(fd2[0], currentRead, sizeof(currentRead));
+				int readSize = read(fd2[0], currentRead, sizeof(currentRead)-1);
+				currentRead[readSize++]='\0';
 				if (readSize == -1){
 					perror("Не могу считать из пайпы для stderr: ");
 					return;
@@ -196,7 +199,7 @@ void doSignals(char* logFileName, char* command, char** arguments){
 			}
 			else{
 				write(logFD, timeStr, strlen(timeStr));
-				write(logFD, " / NO IO", 8);
+				write(logFD, " / NO IO\n", 9);
 			}
 		}
 		printf("%d TERMINATED WITH CODE %d", child, childInfo.si_code);

@@ -132,7 +132,8 @@ void doSelect(char* logFileName, char* command, char** arguments){
 				//------
 			}
 			if (FD_ISSET(0, &fds)){
-				int readSize = read(0, currentRead, sizeof(currentRead));
+				int readSize = read(0, currentRead, sizeof(currentRead)-1);
+				currentRead[readSize++]='\0';
 				if (readSize == -1){
 					perror("Не могу считать из stdin: ");
 					return;
@@ -142,7 +143,7 @@ void doSelect(char* logFileName, char* command, char** arguments){
 				}
 				write(fd0[1], currentRead, readSize);
 				//--Выводим инфу на экран--
-				printf("%d / >0 / %s\n", child, currentRead);
+				printf("%d / >0 / %s", child, currentRead);
 				//--Выводим лог в файл или stderr--
 				write(logFD, timeStr, strlen(timeStr));
 				write(logFD, " / >0 / ", 8);
@@ -150,7 +151,8 @@ void doSelect(char* logFileName, char* command, char** arguments){
 				//------
 			}
 			if (FD_ISSET(fd1[0], &fds)){
-				int readSize = read(fd1[0], currentRead, sizeof(currentRead));
+				int readSize = read(fd1[0], currentRead, sizeof(currentRead)-1);
+				currentRead[readSize++]='\0';
 				if (readSize == -1){
 					perror("Не могу считать из пайпы для stdout: ");
 					return;
@@ -165,7 +167,8 @@ void doSelect(char* logFileName, char* command, char** arguments){
 				//------
 			}
 			if (FD_ISSET(fd2[0], &fds)){
-				int readSize = read(fd2[0], currentRead, sizeof(currentRead));
+				int readSize = read(fd2[0], currentRead, sizeof(currentRead)-1);
+				currentRead[readSize++]='\0';
 				if (readSize == -1){
 					perror("Не могу считать из пайпы для stderr: ");
 					return;
