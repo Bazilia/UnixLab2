@@ -68,7 +68,7 @@ void doSelect(char* logFileName, char* command, char** arguments){
 		return;
 	}
 	else{
-		//--получаем дескриптор файла, по умолчанию ставим stderr--
+
 		int logFD = 2;
 		if (logFileName != NULL) {
 			logFD = open(logFileName, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR);
@@ -77,7 +77,6 @@ void doSelect(char* logFileName, char* command, char** arguments){
 				return;
 			}
 		}
-		//-------
 		struct sigaction act;
 		act.sa_sigaction = &childHandler;
 		act.sa_flags = SA_SIGINFO;
@@ -126,10 +125,8 @@ void doSelect(char* logFileName, char* command, char** arguments){
 			struct tm tm = *localtime(&t);
 			strftime(timeStr, 18, "%D %H:%M:%S", &tm);
 			if (res == 0) {
-				//--Выводим лог в файл или stderr--
 				write(logFD, timeStr, strlen(timeStr));
 				write(logFD, " / NO IO\n", 9);
-				//------
 			}
 			if (FD_ISSET(0, &fds)){
 				int readSize = read(0, currentRead, sizeof(currentRead)-1);
@@ -142,13 +139,12 @@ void doSelect(char* logFileName, char* command, char** arguments){
 					kill(SIGKILL, child);
 				}
 				write(fd0[1], currentRead, readSize);
-				//--Выводим инфу на экран--
+
 				printf("%d / >0 / %s", child, currentRead);
-				//--Выводим лог в файл или stderr--
+
 				write(logFD, timeStr, strlen(timeStr));
 				write(logFD, " / >0 / ", 8);
 				write(logFD, currentRead, readSize);
-				//------
 			}
 			if (FD_ISSET(fd1[0], &fds)){
 				int readSize = read(fd1[0], currentRead, sizeof(currentRead)-1);
@@ -157,14 +153,13 @@ void doSelect(char* logFileName, char* command, char** arguments){
 					perror("Не могу считать из пайпы для stdout: ");
 					return;
 				}
-				//write(fd0[1],currentRead,readSize);
-				//--Выводим инфу на экран--
+
 				printf("%d / <1 / %s", child, currentRead);
-				//--Выводим лог в файл или stderr--
+
 				write(logFD, timeStr, strlen(timeStr));
 				write(logFD, " / <1 / ", 8);
 				write(logFD, currentRead, readSize);
-				//------
+
 			}
 			if (FD_ISSET(fd2[0], &fds)){
 				int readSize = read(fd2[0], currentRead, sizeof(currentRead)-1);
@@ -173,14 +168,10 @@ void doSelect(char* logFileName, char* command, char** arguments){
 					perror("Не могу считать из пайпы для stderr: ");
 					return;
 				}
-				//write(fd0[1],currentRead,readSize);
-				//--Выводим инфу на экран--
 				printf("%d / <2 / %s", child, currentRead);
-				//--Выводим лог в файл или stderr--
 				write(logFD, timeStr, strlen(timeStr));
 				write(logFD, " / <2 / ", 8);
 				write(logFD, currentRead, readSize);
-				//------
 			}
 		}
 		printf("%d TERMINATED WITH CODE %d\n", child, childInfo.si_code);
