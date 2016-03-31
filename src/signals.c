@@ -156,7 +156,7 @@ void doSignals(char* logFileName, char* command, char** arguments){
 					perror("Не могу считать из stdin: ");
 					return;
 				}
-				if (strncmp(currentRead, "exit", 4)){
+				if (strncmp(currentRead, "exit", 4) == 0){
 					kill(SIGKILL, child);
 				}
 				write(fd0[1], currentRead, readSize);
