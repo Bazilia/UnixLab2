@@ -164,7 +164,7 @@ void doSignals(char* logFileName, char* command, char** arguments){
 
 				write(logFD, timeStr, strlen(timeStr));
 				write(logFD, " / >0 / ", 8);
-				write(logFD, currentRead, readSize;
+				write(logFD, currentRead, readSize);
 			}
 			else if (gotOutSignal == 1){
 				gotOutSignal = 0;
@@ -178,7 +178,7 @@ void doSignals(char* logFileName, char* command, char** arguments){
 
 				write(logFD, timeStr, strlen(timeStr));
 				write(logFD, " / <1 / ", 8);
-				write(logFD, currentRead, readSize;
+				write(logFD, currentRead, readSize);
 			}
 			else if (gotErrorSignal == 1){
 				gotErrorSignal = 0;
@@ -192,7 +192,7 @@ void doSignals(char* logFileName, char* command, char** arguments){
 
 				write(logFD, timeStr, strlen(timeStr));
 				write(logFD, " / <2 / ", 8);
-				write(logFD, currentRead, readSize;
+				write(logFD, currentRead, readSize);
 			}
 			else{
 				write(logFD, timeStr, strlen(timeStr));
